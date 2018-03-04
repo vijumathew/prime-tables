@@ -1,5 +1,5 @@
-(ns primes.util-test
-  (:require [primes.util :refer [square-root pad-space]]
+(ns prime-tables.util-test
+  (:require [prime-tables.util :refer [square-root pad-space]]
             [clojure.test :as t :refer [deftest testing is]]))
 
 (deftest square-root-base-test

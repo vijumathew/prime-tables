@@ -1,4 +1,4 @@
-(ns primes.util)
+(ns prime-tables.util)
 
 (defn square-root
   "returns the square-root of N as an int

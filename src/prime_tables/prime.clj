@@ -1,28 +1,26 @@
-(ns primes.prime
-  (:require [primes.util :refer [square-root]]))
+(ns prime-tables.prime
+  (:require [prime-tables.util :refer [square-root]]))
 
 (defn- generate-range
   "generates range used by Sieve of Eratosthenes.
-  more information here -
-https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes"
+  more information in the README."
   [limit n]
   (range (* n n) limit n))
 
-;;algorithm is based on Sieve of Eratosthenes
 (defn- generate-sieve
   "returns sieve for generating prime numbers between BOTTOM
   and UPPER. this can be given an EXISTING sieve created from
   numbers between 2 and BOTTOM if BOTTOM is greater
-  than 2 from `generate-old-sieve`."
+  than 2 from `generate-missing-sieve`."
   ([upper]
    (generate-sieve 2 upper '()))
-  ([bottom upper existing]
+  ([bottom upper existing-sieve]
    (let [bottom-sqrt (square-root bottom)
          upper-sqrt (square-root upper)]
      (->> (inc upper-sqrt)
           (range (max 2 bottom-sqrt))
           (mapcat (partial generate-range upper))
-          (concat existing)
+          (concat existing-sieve)
           (apply hash-set)))))
 
 (defn- round-to-start
@@ -58,18 +56,16 @@ between 2 and BOTTOM."
             starts (repeat upper) missing-range)))
 
 (defn- generate-primes-internal
-  "internal function used to generate primes.
-
-  BOTTOM is the beginning of the range, TOP is the end,
-  and REMOVALS is the sieve generated for numbers up to TOP."
-  [bottom top removals]
-  (remove #(contains? removals %) (range 2 top)))
+  "internal function used to generate primes up to TOP.
+  SIEVE is the sieve generated for numbers up to TOP."
+  [top sieve]
+  (remove #(contains? sieve %) (range 2 top)))
 
 (defn generate-primes
   "calculates primes less than TOP by generating the sieve
   up to TOP and removing all numbers present in the sieve."
   [top]
-  (generate-primes-internal 2 top (generate-sieve top)))
+  (generate-primes-internal top (generate-sieve top)))
 
 (defn generate-n-primes
   "generates N prime numbers."
@@ -82,10 +78,10 @@ between 2 and BOTTOM."
           estimate (int (* n (+ log (Math/log log))))]
       (loop [bottom 2
              upper estimate
-             old '()]
-        (let [older (generate-missing-sieve bottom upper)
-              removals (generate-sieve bottom upper (concat old older))
-              primes (generate-primes-internal bottom upper removals)]
+             existing-sieve '()]
+        (let [missing-sieve (generate-missing-sieve bottom upper)
+              sieve (generate-sieve bottom upper (concat existing-sieve missing-sieve))
+              primes (generate-primes-internal upper sieve)]
           (if (>= (count primes) n)
             (take n primes)
-            (recur upper (* 2 (inc upper)) removals)))))))
+            (recur upper (* 2 (inc upper)) sieve)))))))

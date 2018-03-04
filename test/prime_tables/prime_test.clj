@@ -1,5 +1,5 @@
-(ns primes.prime-test
-  (:require [primes.prime :as p]
+(ns prime-tables.prime-test
+  (:require [prime-tables.prime :as p]
             [clojure.test :as t :refer [deftest testing is]]))
 
 (def primes-below-100 '(2 3 5 7 11 13 17 19 23 29 31 37 41 43 47 53 59 61 67 71 73 79 83 89 97))
@@ -71,4 +71,3 @@
     (is (= (p/generate-n-primes 0) '()))
     (is (= (p/generate-n-primes 1) '(2)))
     (is (= (p/generate-n-primes 2) '(2 3)))))
-

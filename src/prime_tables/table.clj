@@ -1,6 +1,6 @@
-(ns primes.table
+(ns prime-tables.table
   (:require [clojure.string :refer [join]]
-            [primes.util :refer [pad-space]]))
+            [prime-tables.util :refer [pad-space]]))
 
 (defonce ^:private blank " ")
 (defonce ^:private col "|")
@@ -59,12 +59,11 @@ multiplying ROW by the 2nd element, etc."
   is the longest row passed in."
   [table]
   (let [end (last table)
-        string-length (comp count str)
-        lengths (map string-length (last table))
-        width (count (format-table-row lengths end))
-        divider-row (apply str (repeat width row-separator))]
+        cell-widths (map (comp count str) end)
+        table-width (count (format-table-row cell-widths end))
+        divider-row (apply str (repeat table-width row-separator))]
     (conj
-     (map #(str (format-table-row lengths %)
+     (map #(str (format-table-row cell-widths %)
                 line-separator
                 divider-row)
           table)

@@ -1,5 +1,5 @@
-(ns primes.table-test
-  (:require [primes.table :as table]
+(ns prime-tables.table-test
+  (:require [prime-tables.table :as table]
             [clojure.test :as t :refer [deftest testing is]]))
 
 ;;private functions, so only testing main case

@@ -1,6 +1,6 @@
-(ns primes.core
-  (:require [primes.prime :as p]
-            [primes.table :as t]))
+(ns prime-tables.core
+  (:require [prime-tables.prime :as p]
+            [prime-tables.table :as t]))
 
 (defn -main
   ([]
