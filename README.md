@@ -132,9 +132,9 @@ Because the Sieve of Eratosthenes generates primes less than a certain number, i
 2. We create a sieve for numbers up to E and get all primes less than E.
 3. We don't have enough primes so we need to increase our range and make a new sieve.
 4. Let F be our new upper bound. Our new sieve needs to contain numbers of the form `p^2, p^2 + p, p^2 + 2p, ...` to F for `p = 2, 3, ..., sqrt(F)`. Note our existing sieve contains numbers of that form to E for `p = 2, 3, ..., sqrt(E)`.
-   1. We create a sieve containing numbers of the form `p^2 + x*p` for `p = 2, 3, ..., sqrt(E)` where x is the first number such that `p^2 + x*p > E`. This is done in (`prime-tables.prime/generate-missing-sieve`).
+   1. We create a sieve containing numbers of the form `p^2 + x*p` for `p = 2, 3, ..., sqrt(E)` where x is the range of integers such that `E < p^2 + x*p < F`. This is done in (`prime-tables.prime/generate-missing-sieve`).
    2. We then create a sieve of numbers of the form `p^2, p^2 + p, p^2 + 2p, ...` for integer p where `sqrt(E) <= p < sqrt(F)`
-   3. We then concat these sieves together with our old sieve, meaning we now have all the numbers necessary detailed above.
+   3. We then concat these sieves together with our old sieve, meaning we now have all the numbers necessary detailed above (in step 4).
 5. We use our new sieve to get all primes less than F. If this is still not enough, we can repeat step 3 and 4 again to increase the bound and make a new sieve.
 
 This is implemented in `prime-tables.prime/generate-n-primes`.
