@@ -1,6 +1,7 @@
 (ns prime-tables.core
   (:require [prime-tables.prime :as p]
-            [prime-tables.table :as t]))
+            [prime-tables.table :as t])
+  (:gen-class))
 
 (defn -main
   ([]
