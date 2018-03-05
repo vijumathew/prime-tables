@@ -2,7 +2,7 @@
 
 ## Description
 
-Tools for generating prime numbers and multiplication tables.
+Tools for generating prime numbers and (multiplication) tables.
 
 ```
 --------------------------------
@@ -28,6 +28,8 @@ Tools for generating prime numbers and multiplication tables.
 
 ## Running
 
+The main method prints a multiplication table of the first 10 primes.
+
 ### CLI
 
 Download the repo and cd into it:
@@ -36,33 +38,33 @@ Download the repo and cd into it:
 $ cd prime-tables
 ```
 
-The following also take an optional input N for the number of primes to output.
+The following also take an optional input N for the number of primes to include in the table.
 
 #### Clojure CLI
 
-at your terminal enter:
+To print the multiplication table to your terminal:
 
 ```bash
 $ clojure -m prime-tables.core
 ```
-for a multiplication table of the first 5 primes:
+For a multiplication table of the first 5 primes:
 ```bash
 $ clojure -m prime-tables.core 5
 ```
 
 #### Leiningen
-at your terminal enter:
+At your terminal enter:
 
 ```bash
 $ lein run
 ```
-for a multiplication table of the first 5 primes:
+For a multiplication table of the first 5 primes:
 ```bash
 $ lein run 5
 ```
 
 ## Packaging
-The simplest way to package this is to use Leiningen.
+The simplest way to package this is to use Leiningen. These JARs also take an optional input N for the number of primes.
 
 ### Standalone JAR
 Go into the directory containing the project and run uberjar. That is
@@ -73,7 +75,7 @@ $ lein uberjar
 
 This can be executed as a standalone executable.
 ```bash
-$ java -jar target/prime-tables-0.1.0-standalone.jar
+$ java -jar target/prime-tables-0.1-standalone.jar
 ```
 
 ### JAR without dependencies
@@ -86,7 +88,7 @@ $ lein jar
 This is run by including Clojure on the classpath and executing the JAR. Notice the underscore!
 
 ```bash
-$ java -cp target/prime-tables-0.1.0.jar:clojure.jar prime_tables.core
+$ java -cp target/prime-tables-0.1.jar:clojure.jar prime_tables.core
 ```
 ## API
 ### Prime
@@ -117,10 +119,10 @@ There is an optimization for this algorithm where we only use a number as p (in 
 The implementation is performed in a slightly different order than the steps above. We generate all the lists (steps 2, 3, and 5) first and then filter out the numbers (step 4). The steps are:
 
 1. Create a list of numbers to remove (`prime-tables.prime/generate-sieve`).
-   1. Create a list from 2 to sqrt(N)
-   2. Generates a list of the form detailed in step 3 above `p^2, p^2 + p, p^2 + 2p, ...` for each number
-   3. Concatenate them together
-   4. Put them in a hash-set
+   1. Create a list from 2 to sqrt(N).
+   2. Generates a list of the form detailed in step 3 above `p^2, p^2 + p, p^2 + 2p, ...` for each number.
+   3. Concatenate them together.
+   4. Put them in a hash-set.
 2. Iterate over numbers from 2 to N and filter out numbers above (`prime-tables.prime/generate-primes`).
 
 #### N primes
